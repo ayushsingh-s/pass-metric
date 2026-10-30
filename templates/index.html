@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zero-Knowledge Password Validator & Research Tool</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; margin: 0; padding: 40px; display: flex; justify-content: center; }
+        .container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 600px; }
+        h2 { color: #333; margin-top: 0; }
+        input[type="password"] { width: 100%; padding: 12px; margin: 10px 0 20px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+        button { background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; }
+        button:hover { background: #0056b3; }
+        .results { margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px; }
+        .card { background: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 12px; border-left: 4px solid #007bff; }
+        .warning { border-left-color: #dc3545; color: #721c24; background: #f8d7da; padding: 10px; border-radius: 4px; margin-top: 8px;}
+        .safe { border-left-color: #28a745; color: #155724; background: #d4edda; padding: 10px; border-radius: 4px; margin-top: 8px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Zero-Knowledge Security Evaluator</h2>
+        <form method="POST">
+            <label for="password">Enter Password to Test:</label>
+            <input type="password" id="password" name="password" placeholder="Type a password..." required>
+            <button type="submit">Evaluate Security</button>
+        </form>
+
+        {% if result %}
+        <div class="results">
+            <h3>Analysis Report</h3>
+            
+            <div class="card">
+                <strong>1. Mathematical Entropy (zxcvbn Score):</strong> {{ result.score }} / 4<br>
+                <strong>Estimated Brute-Force Time:</strong> {{ result.crack_time }}<br>
+                <p style="margin: 8px 0 0 0;"><em>Feedback: {{ result.feedback }}</em></p>
+            </div>
+
+            <div class="card">
+                <strong>2. K-Anonymity Leak Check:</strong>
+                {% if result.breach_count > 0 %}
+                    <div class="warning">⚠️ <strong>Vulnerability Detected:</strong> This password has leaked in public data breaches <strong>{{ result.breach_count }}</strong> times!</div>
+                {% elif result.breach_count == 0 %}
+                    <div class="safe">✅ <strong>Secure:</strong> Zero appearances found in public data leaks.</div>
+                {% else %}
+                    <div class="warning">⚠️ Could not connect to public breach API.</div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
