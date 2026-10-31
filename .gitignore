@@ -1,0 +1,16 @@
+# Python / Flask
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.env
+
+# VS Code
+.vscode/
+
+# Generated Benchmark Plots
+research_benchmark_plot.png
