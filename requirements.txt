@@ -2,3 +2,4 @@ Flask
 requests
 zxcvbn
 matplotlib
+gunicorn
