@@ -14,6 +14,12 @@ PassMetric helps users understand password strength using local entropy calculat
 
 ---
 
+## Live Demo
+
+Check out the live application here: **(https://pass-metric.onrender.com)**
+
+---
+
 ## Project Structure
 
 ```text
